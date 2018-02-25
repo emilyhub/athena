@@ -4,7 +4,6 @@ Created on Feb 25, 2018
 @author: Christine
 '''
 import re
-from bs4 import BeautifulSoup
 import urllib.request
 import json
 
@@ -48,20 +47,13 @@ def output(info_dict) -> str:
     string = "DIRECTIONS\n"
     
     for route_list in info_dict['routes']:
-        for k,v in route_list.items():
-            if k=='legs':
-                for item in v:
-                    for k1,v1 in item.items():
-                        if k1=='steps':
-                            for i in v1:
-                                for i1,p1 in i.items():
-                                    if i1=='html_instructions':
-                                        cleanhtml(p1)
-                                        string += cleanhtml(p1) + "\n"
+        for item in route_list['legs']:
+            for i in item['steps']:
+                string += cleanhtml(i['html_instructions']) + "\n"
     return string
 
 
 if __name__ == "__main__":
-    url = build_directions_url(["Los Angeles, CA", "Arcadia, CA"])
+    url = build_directions_url(["Berkeley,CA", "San Jose,CA"])
     json_dict = get_dict(url)
     print(output(json_dict))
