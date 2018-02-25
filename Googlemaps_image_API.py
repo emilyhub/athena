@@ -3,7 +3,8 @@ Created on Feb 25, 2018
 
 @author: Christine
 '''
-
+import re
+from bs4 import BeautifulSoup
 import urllib.request
 import json
 
@@ -36,17 +37,31 @@ def get_dict(url: str)-> dict:
             response.close()
                       
 
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return(cleantext)
+
 def output(info_dict) -> str:
     """Returns string representing directions in navigation"""
+    
     string = "DIRECTIONS\n"
-    for item in info_dict['routes']['legs']:
-        for dir in item['maneuver']:
-            string += dir['html_instructions'] + "\n"
+    
+    for route_list in info_dict['routes']:
+        for k,v in route_list.items():
+            if k=='legs':
+                for item in v:
+                    for k1,v1 in item.items():
+                        if k1=='steps':
+                            for i in v1:
+                                for i1,p1 in i.items():
+                                    if i1=='html_instructions':
+                                        cleanhtml(p1)
+                                        string += cleanhtml(p1) + "\n"
     return string
 
 
 if __name__ == "__main__":
     url = build_directions_url(["Los Angeles, CA", "Arcadia, CA"])
-    print(url)
     json_dict = get_dict(url)
     print(output(json_dict))
