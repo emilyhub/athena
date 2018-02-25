@@ -9,7 +9,6 @@ import json
 
 
 GOOGLE_API_KEY = 'AIzaSyDkN61iYzq13gNouJTLf2Oqw1_MkIpxefE'
-# MAPQUEST_SECRET = "HP3Q0rZnTzg5NskH"
 
 BASE_DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions"
 
