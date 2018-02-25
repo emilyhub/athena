@@ -1,8 +1,3 @@
-'''
-Created on Feb 25, 2018
-
-@author: Christine
-'''
 import re
 import urllib.request
 import json
@@ -42,14 +37,16 @@ def cleanhtml(raw_html):
 
 def output(info_dict) -> str:
     """Returns string representing directions in navigation"""
-    
+    total_time=0
     string = "DIRECTIONS\n"
+    
     
     for route_list in info_dict['routes']:
         for item in route_list['legs']:
+            total_time+=int(item['duration']['value'])/60
             for i in item['steps']:
                 string += cleanhtml(i['html_instructions']) + "\n"
-    return string
+    return string + "\n"+ 'Your drive will take {t:.2f} minutes.'.format(t=total_time)
 
 
 if __name__ == "__main__":
