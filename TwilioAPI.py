@@ -2,7 +2,8 @@
 #ngrok
 from flask import Flask, request, redirect
 from twilio.rest import Client
-import UserInput
+#import UserInput
+import start
 
 from twilio.twiml.messaging_response import MessagingResponse
 
@@ -13,10 +14,11 @@ def sms():
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None) #type is string
     print(body)
-    messageTuple = UserInput.Sentence_To_Words(body)
+    video = start.download_video(body)
+    #messageTuple = UserInput.Sentence_To_Words(body)
     
     r = MessagingResponse()
-    r.message('{}'.format(messageTuple))
+    r.message('{}'.format(video))
     return str(r)
 
 
