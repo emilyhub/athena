@@ -40,7 +40,7 @@ def output(info_dict) -> str:
 
 
 if __name__ == "__main__":
-    url = build_directions_url(["Los Angeles, CA", "Arcadia, CA"])
+    url = build_directions_url(["Berkeley, CA", "San Jose, CA"])
     json_dict = get_dict(url)
     print(output(json_dict))
     

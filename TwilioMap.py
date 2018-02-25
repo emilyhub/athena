@@ -3,7 +3,7 @@
 #blob storage
 from flask import Flask, request, redirect
 from twilio.rest import Client
-import Location
+import Googlemaps_image_API
 import GoogleImages
 
 #my google static map key = AIzaSyCVReYL_jNGToQ1obg-AN31KCu6XMq5XAI
@@ -30,10 +30,12 @@ def sms():
     
     locations = body.split('\n')
     print(locations)
-    url = Location.build_directions_url(locations)
-    json_dict = Location.get_dict(url)
+    url = Googlemaps_image_API.build_directions_url(locations)
+    json_dict = Googlemaps_image_API.get_dict(url)
     
-    msg = r2.message(Location.output(json_dict))
+    r2.message(Googlemaps_image_API.output(json_dict))
+    
+    msg = r2.message()
     msg.media(image_url)
 
     
